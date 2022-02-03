@@ -42,22 +42,22 @@ function createRow({ name, schema, required }: RowProps) {
   return create("tr", {
     children: create("td", {
       children: [
-        create("code", { children: name }),
+        create("strong", { children: name }),
         create("span", {
           style: { opacity: "0.6" },
           children: ` ${getSchemaName(schema, true)}`,
         }),
         guard(required, () => [
-          create("span", {
-            style: { opacity: "0.6" },
-            children: " — ",
-          }),
+          // create("span", {
+          //   style: { opacity: "0.6" },
+          //   children: " — ",
+          // }),
           create("strong", {
             style: {
               fontSize: "var(--ifm-code-font-size)",
               color: "var(--openapi-required)",
             },
-            children: " REQUIRED",
+            children: " required",
           }),
         ]),
         guard(getQualifierMessage(schema), (message) =>
@@ -248,16 +248,16 @@ export function createSchemaTable({ title, body, ...rest }: Props) {
             children: [
               `${title} `,
               guard(body.required, () => [
-                create("span", {
-                  style: { opacity: "0.6" },
-                  children: " — ",
-                }),
+                // create("span", {
+                //   style: { opacity: "0.6" },
+                //   children: " — ",
+                // }),
                 create("strong", {
                   style: {
                     fontSize: "var(--ifm-code-font-size)",
                     color: "var(--openapi-required)",
                   },
-                  children: " REQUIRED",
+                  children: " required",
                 }),
               ]),
               create("div", {

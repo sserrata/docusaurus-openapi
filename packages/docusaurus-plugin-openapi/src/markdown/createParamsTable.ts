@@ -33,9 +33,7 @@ export function createParamsTable({ parameters, type }: Props) {
         children: create("tr", {
           children: create("th", {
             style: { textAlign: "left" },
-            children: `${
-              type.charAt(0).toUpperCase() + type.slice(1)
-            } Parameters`,
+            children: `${type.toUpperCase()} PARAMS`,
           }),
         }),
       }),
@@ -44,7 +42,7 @@ export function createParamsTable({ parameters, type }: Props) {
           create("tr", {
             children: create("td", {
               children: [
-                create("code", { children: param.name }),
+                create("strong", { children: param.name }),
                 guard(param.schema, (schema) =>
                   create("span", {
                     style: { opacity: "0.6" },
@@ -52,16 +50,16 @@ export function createParamsTable({ parameters, type }: Props) {
                   })
                 ),
                 guard(param.required, () => [
-                  create("span", {
-                    style: { opacity: "0.6" },
-                    children: " — ",
-                  }),
+                  // create("span", {
+                  //   style: { opacity: "0.6" },
+                  //   children: " — ",
+                  // }),
                   create("strong", {
                     style: {
                       fontSize: "var(--ifm-code-font-size)",
                       color: "var(--openapi-required)",
                     },
-                    children: " REQUIRED",
+                    children: " required",
                   }),
                 ]),
                 guard(getQualifierMessage(param.schema), (message) =>

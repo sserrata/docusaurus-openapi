@@ -9,6 +9,8 @@ import { ApiItem } from "../types";
 import { createDescription } from "./createDescription";
 import { createFullWidthTable } from "./createFullWidthTable";
 import { createSchemaTable } from "./createSchemaTable";
+import { createDetails } from "./createDetails";
+import { createDetailsSummary } from "./createDetailsSummary";
 import { create } from "./utils";
 
 interface Props {
@@ -40,32 +42,44 @@ export function createStatusCodesTable({ responses }: Props) {
           create("tr", {
             children: create("td", {
               children: [
-                create("div", {
-                  style: { display: "flex" },
-                  children: [
-                    create("div", {
-                      style: { marginRight: "var(--ifm-table-cell-padding)" },
-                      children: create("code", {
-                        children: code,
-                      }),
+                responses[code].content
+                  ? createDetails({
+                      children: [
+                        createDetailsSummary({
+                          children: `<code>${code}</code> ${responses[code].description}`,
+                        }),
+                        create("div", {
+                          children: createSchemaTable({
+                            style: {
+                              marginTop: "var(--ifm-table-cell-padding)",
+                              marginBottom: "0px",
+                            },
+                            title: "Schema",
+                            body: {
+                              content: responses[code].content,
+                            },
+                          }),
+                        }),
+                      ],
+                    })
+                  : create("div", {
+                      style: { display: "flex" },
+                      children: [
+                        create("div", {
+                          style: {
+                            marginRight: "var(--ifm-table-cell-padding)",
+                          },
+                          children: create("code", {
+                            children: code,
+                          }),
+                        }),
+                        create("div", {
+                          children: createDescription(
+                            responses[code].description
+                          ),
+                        }),
+                      ],
                     }),
-                    create("div", {
-                      children: createDescription(responses[code].description),
-                    }),
-                  ],
-                }),
-                create("div", {
-                  children: createSchemaTable({
-                    style: {
-                      marginTop: "var(--ifm-table-cell-padding)",
-                      marginBottom: "0px",
-                    },
-                    title: "Schema",
-                    body: {
-                      content: responses[code].content,
-                    },
-                  }),
-                }),
               ],
             }),
           })

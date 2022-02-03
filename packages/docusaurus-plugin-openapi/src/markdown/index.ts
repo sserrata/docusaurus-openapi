@@ -35,7 +35,7 @@ export function createApiPageMD({
     createParamsTable({ parameters, type: "query" }),
     createParamsTable({ parameters, type: "header" }),
     createParamsTable({ parameters, type: "cookie" }),
-    createRequestBodyTable({ title: "Request Body", body: requestBody }),
+    createRequestBodyTable({ title: "REQUEST BODY", body: requestBody }),
     createStatusCodesTable({ responses }),
   ]);
 }
