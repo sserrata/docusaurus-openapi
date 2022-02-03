@@ -10,7 +10,7 @@ const config = {
   tagline: "OpenAPI plugin for generating API reference docs in Docusaurus v2.",
   url: "https://docusaurus-openapi.netlify.app",
   baseUrl: "/",
-  onBrokenLinks: "throw",
+  onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
   organizationName: "cloud-annotations", // Usually your GitHub org/user name.
@@ -57,9 +57,9 @@ const config = {
     [
       "docusaurus-plugin-openapi",
       {
-        id: "multi-spec",
-        path: "examples",
-        routeBasePath: "multi-spec",
+        id: "cspm",
+        path: "examples/cspm.yaml",
+        routeBasePath: "cspm",
       },
     ],
   ],
@@ -68,7 +68,7 @@ const config = {
     /** @type {import('docusaurus-preset-openapi').ThemeConfig} */
     ({
       colorMode: {
-        disableSwitch: true,
+        disableSwitch: false,
         defaultMode: "dark",
       },
       navbar: {
@@ -90,7 +90,7 @@ const config = {
             items: [
               { to: "/petstore", label: "Petstore" },
               { to: "/cos", label: "Cloud Object Storage" },
-              { to: "/multi-spec", label: "Multi-spec" },
+              { to: "/cspm", label: "CSPM" },
             ],
           },
           {
