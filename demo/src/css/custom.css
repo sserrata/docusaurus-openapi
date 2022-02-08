@@ -392,3 +392,10 @@ html[data-theme="dark"] .header-github-link:before {
   border-color: var(--openapi-code-orange);
   color: var(--openapi-code-orange);
 }
+
+.alert--success {
+  --ifm-alert-background-color: var(--ifm-color-success-contrast-background);
+  --ifm-alert-background-color-highlight: rgba(0, 164, 0, 0.15);
+  --ifm-alert-foreground-color: var(--ifm-color-success-contrast-foreground);
+  --ifm-alert-border-color: var(--ifm-color-success-dark);
+}
