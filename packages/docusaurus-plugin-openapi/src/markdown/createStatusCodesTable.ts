@@ -12,6 +12,7 @@ import { createSchemaTable } from "./createSchemaTable";
 import { createDetails } from "./createDetails";
 import { createDetailsSummary } from "./createDetailsSummary";
 import { create } from "./utils";
+import { parse } from "path/posix";
 
 interface Props {
   responses: ApiItem["responses"];
@@ -27,61 +28,55 @@ export function createStatusCodesTable({ responses }: Props) {
     return undefined;
   }
 
-  return createFullWidthTable({
+  return create("div", {
     children: [
-      create("thead", {
-        children: create("tr", {
-          children: create("th", {
-            style: { textAlign: "left" },
-            children: `Responses`,
-          }),
-        }),
-      }),
-      create("tbody", {
+      create("h4", { children: "Responses" }),
+      create("div", {
         children: codes.map((code) =>
-          create("tr", {
-            children: create("td", {
-              children: [
-                responses[code].content
-                  ? createDetails({
+          create("div", {
+            children: [
+              createDetails({
+                className:
+                  parseInt(code) >= 400
+                    ? "alert--danger"
+                    : parseInt(code) >= 200 && parseInt(code) < 300
+                    ? "alert--success"
+                    : "alert--warning",
+                children: [
+                  createDetailsSummary({
+                    children: create("span", {
                       children: [
-                        createDetailsSummary({
-                          children: `<code>${code}</code> ${responses[code].description}`,
-                        }),
-                        create("div", {
-                          children: createSchemaTable({
-                            style: {
-                              marginTop: "var(--ifm-table-cell-padding)",
-                              marginBottom: "0px",
-                            },
-                            title: "Schema",
-                            body: {
-                              content: responses[code].content,
-                            },
-                          }),
-                        }),
-                      ],
-                    })
-                  : create("div", {
-                      style: { display: "flex" },
-                      children: [
-                        create("div", {
+                        create("code", {
+                          children: code,
                           style: {
-                            marginRight: "var(--ifm-table-cell-padding)",
+                            display: "inline-block",
+                            marginRight: "8px",
                           },
-                          children: create("code", {
-                            children: code,
-                          }),
                         }),
                         create("div", {
                           children: createDescription(
                             responses[code].description
                           ),
+                          style: { display: "inline-block" },
                         }),
                       ],
                     }),
-              ],
-            }),
+                  }),
+                  create("div", {
+                    children: createSchemaTable({
+                      style: {
+                        marginTop: "var(--ifm-table-cell-padding)",
+                        marginBottom: "0px",
+                      },
+                      title: "Schema",
+                      body: {
+                        content: responses[code].content,
+                      },
+                    }),
+                  }),
+                ],
+              }),
+            ],
           })
         ),
       }),
